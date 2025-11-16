@@ -22,12 +22,8 @@
             transform: translateX(-100%);
         }
         
-        #sidebar.open {
-            transform: translateX(0);
-        }
-
-        /* 在 md (768px) 以上的螢幕，側邊欄預設開啟 */
-        @media (min-width: 768px) {
+        /* 在 lg (1024px) 以上的螢幕，側邊欄預設開啟 */
+        @media (min-width: 1024px) {
             #sidebar {
                 transform: translateX(0);
             }
@@ -203,11 +199,11 @@
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden"></div>
 
     <!-- 側邊欄 -->
-    <aside id="sidebar" class="w-64 bg-white shadow-md flex-shrink-0 fixed inset-y-0 left-0 z-30 md:relative flex flex-col">
-        <div class="p-4 flex justify-between items-center border-b md:border-b-0 flex-shrink-0">
+    <aside id="sidebar" class="w-64 bg-white shadow-md flex-shrink-0 fixed inset-y-0 left-0 z-30 lg:relative flex flex-col">
+        <div class="p-4 flex justify-between items-center border-b lg:border-b-0 flex-shrink-0">
             <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">單字列表</h2>
             <!-- 行動裝置上的關閉按鈕 -->
-            <button id="sidebar-close-btn" class="md:hidden text-gray-500 hover:text-gray-800">
+            <button id="sidebar-close-btn" class="lg:hidden text-gray-500 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
         </div>
