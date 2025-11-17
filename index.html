@@ -12,7 +12,7 @@
         /* 自訂樣式 */
         body {
             font-family: 'Inter', 'Noto Sans TC', sans-serif;
-            background-color: #fbfaf5; /* 淺灰色背景 -> 溫暖米色 */
+            background-color: #f8f9fa; /* 淺灰色背景 */
         }
 
         /* 側邊欄樣式 */
@@ -20,6 +20,11 @@
             transition: transform 0.3s ease-in-out;
             /* 預設在小螢幕上隱藏 */
             transform: translateX(-100%);
+        }
+        
+        /* 新增：行動裝置上側邊欄開啟時的樣式 */
+        #sidebar.open {
+            transform: translateX(0);
         }
         
         /* 在 lg (1024px) 以上的螢幕，側邊欄預設開啟 */
@@ -66,7 +71,6 @@
             background-color: white;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             padding: 1rem; /* 新增：統一 padding */
-            background-color: #fffefb; /* 卡片背景色 white -> 淺米白 */
         }
 
         .card-back {
@@ -133,7 +137,7 @@
             transition: all 0.2s ease-in-out;
         }
         .sidebar-link:not(.active):hover {
-            background-color: #f0eade; /* 淺灰 -> 米色 hover */
+            background-color: #f1f5f9; /* 淺灰 */
         }
         
         /* --- 新增：練習模式樣式 --- */
@@ -200,7 +204,7 @@
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden"></div>
 
     <!-- 側邊欄 -->
-    <aside id="sidebar" class="w-64 bg-[#f7f4ec] shadow-md flex-shrink-0 fixed inset-y-0 left-0 z-30 lg:relative flex flex-col"> <!-- bg-white -> bg-beige-100 -->
+    <aside id="sidebar" class="w-64 bg-white shadow-md flex-shrink-0 fixed inset-y-0 left-0 z-30 lg:relative flex flex-col">
         <div class="p-4 flex justify-between items-center border-b lg:border-b-0 flex-shrink-0">
             <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">單字列表</h2>
             <!-- 行動裝置上的關閉按鈕 -->
@@ -209,47 +213,12 @@
             </button>
         </div>
         <nav id="sidebar-nav" class="flex-1 flex flex-col p-2 overflow-y-auto divide-y divide-gray-200"></nav>
-
-        <!-- 修改：詞性對照表 (美化) -->
-        <div class="flex-shrink-0 p-4 border-t border-gray-200">
-            <h3 class="text-xs font-semibold text-gray-400 uppercase mb-3">詞性對照</h3>
-            <!-- 使用 grid 讓排版更整齊 + 新增背景和圓角 -->
-            <div class="bg-[#f0eade] p-3 rounded-lg grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs"> <!-- bg-gray-50 -> bg-beige-200 -->
-                <span class="font-bold text-gray-700">n.</span>
-                <span class="text-gray-500">名詞</span>
-                
-                <span class="font-bold text-gray-700">v.</span>
-                <span class="text-gray-500">動詞 (vi./vt.)</span>
-                
-                <span class="font-bold text-gray-700">adj.</span>
-                <span class="text-gray-500">形容詞</span>
-                
-                <span class="font-bold text-gray-700">adv.</span>
-                <span class="text-gray-500">副詞</span>
-                
-                <span class="font-bold text-gray-700">prep.</span>
-                <span class="text-gray-500">介系詞</span>
-                
-                <span class="font-bold text-gray-700">conj.</span>
-                <span class="text-gray-500">連接詞</span>
-                
-                <span class="font-bold text-gray-700">pron.</span>
-                <span class="text-gray-500">代名詞</span>
-                
-                <span class="font-bold text-gray-700">interj.</span>
-                <span class="text-gray-500">感嘆詞</span>
-                
-                <span class="font-bold text-gray-700">(片)</span>
-                <span class="text-gray-500">片語</span>
-            </div>
-        </div>
-        <!-- 結束修改 -->
     </aside>
 
     <!-- 主要內容區 -->
     <main id="main-content" class="flex-1 flex flex-col overflow-hidden">
         <!-- 頂部標題 -->
-        <header class="bg-[#f7f4ec] shadow-sm p-4 z-10 flex items-center"> <!-- bg-white -> bg-beige-100 -->
+        <header class="bg-white shadow-sm p-4 z-10 flex items-center">
             <!-- 漢堡按鈕 -->
             <button id="sidebar-toggle-btn" class="p-2 mr-2 text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -287,7 +256,7 @@
         </div>
 
         <!-- 底部提示 -->
-        <footer class="text-center p-4 text-gray-500 text-sm bg-[#f7f4ec] border-t" id="main-footer"> <!-- bg-white -> bg-beige-100 -->
+        <footer class="text-center p-4 text-gray-500 text-sm bg-white border-t" id="main-footer">
             點擊卡片或按空白鍵/Enter 進行翻轉
         </footer>
     </main>
@@ -298,7 +267,7 @@
         <div class="modal-backdrop fixed inset-0"></div>
         
         <!-- Modal 內容 (修正：新增 flex flex-col) -->
-        <div class="modal w-full max-w-lg bg-[#f7f4ec] rounded-lg shadow-2xl z-50 transform scale-95 opacity-0 flex flex-col"> <!-- bg-white -> bg-beige-100 -->
+        <div class="modal w-full max-w-lg bg-white rounded-lg shadow-2xl z-50 transform scale-95 opacity-0 flex flex-col">
             <!-- Modal 標題 -->
             <div class="flex justify-between items-center p-4 border-b">
                 <h3 class="text-lg font-semibold text-gray-800">練習設定</h3>
@@ -312,7 +281,7 @@
                 <!-- 選擇天數 -->
                 <div>
                     <h4 class="font-medium text-gray-700">選擇要練習的天數</h4>
-                    <div id="day-selection-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mt-3 max-h-48 overflow-y-auto p-2 bg-[#f0eade] rounded-md border"> <!-- bg-gray-50 -> bg-beige-200 -->
+                    <div id="day-selection-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mt-3 max-h-48 overflow-y-auto p-2 bg-gray-50 rounded-md border">
                         <!-- JS 動態填入 Checkbox -->
                     </div>
                     <div class="mt-2 text-xs text-gray-500">
@@ -339,7 +308,7 @@
             </div>
             
             <!-- Modal 底部 -->
-            <div class="flex justify-end items-center p-4 bg-[#f0eade] border-t rounded-b-lg"> <!-- bg-gray-50 -> bg-beige-200 -->
+            <div class="flex justify-end items-center p-4 bg-gray-50 border-t rounded-b-lg">
                 <span id="quiz-setup-error" class="text-sm text-red-500 mr-4 hidden">請至少選擇一個天數</span>
                 <button id="start-quiz-btn" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                     開始測驗
@@ -2798,13 +2767,6 @@
                 levelHTML = `<div class="text-gray-500 text-sm">${wordData.level}</div>`;
             }
 
-            // --- 新增：格式化詞性 ---
-            let formattedPOS = wordData.pos;
-            if (formattedPOS === '片') {
-                formattedPOS = '(片)';
-            }
-            // --- 結束新增 ---
-
 
             cardContainer.innerHTML = `
                 <div class="flashcard-inner">
@@ -2816,7 +2778,7 @@
                         ${advancedBadge}
                         ${levelHTML}
                         <h3 class="text-xl font-bold">${wordData.word}</h3>
-                        <p class="text-md text-gray-700">${formattedPOS} ${wordData.definition}</p>
+                        <p class="text-md text-gray-700">${wordData.pos} ${wordData.definition}</p>
                         ${exampleHTML}
                         ${mnemonicHTML}
                     </div>
@@ -2931,7 +2893,8 @@
                     currentDay = day;
                     renderVocabGrid(currentDay); // renderVocabGrid 會自動退出練習模式
                     
-                    if (window.innerWidth < 768) {
+                    // 修正：將 768px 改為 1024px，以匹配 CSS 的 lg 中斷點
+                    if (window.innerWidth < 1024) { 
                         sidebar.classList.remove('open');
                         overlay.classList.add('hidden');
                     }
