@@ -239,7 +239,7 @@
                 <span class="font-bold text-gray-700">interj.</span>
                 <span class="text-gray-500">感嘆詞</span>
                 
-                <span class="font-bold text-gray-700">片</span>
+                <span class="font-bold text-gray-700">(片)</span>
                 <span class="text-gray-500">片語</span>
             </div>
         </div>
@@ -2798,6 +2798,13 @@
                 levelHTML = `<div class="text-gray-500 text-sm">${wordData.level}</div>`;
             }
 
+            // --- 新增：格式化詞性 ---
+            let formattedPOS = wordData.pos;
+            if (formattedPOS === '片') {
+                formattedPOS = '(片)';
+            }
+            // --- 結束新增 ---
+
 
             cardContainer.innerHTML = `
                 <div class="flashcard-inner">
@@ -2809,7 +2816,7 @@
                         ${advancedBadge}
                         ${levelHTML}
                         <h3 class="text-xl font-bold">${wordData.word}</h3>
-                        <p class="text-md text-gray-700">${wordData.pos} ${wordData.definition}</p>
+                        <p class="text-md text-gray-700">${formattedPOS} ${wordData.definition}</p>
                         ${exampleHTML}
                         ${mnemonicHTML}
                     </div>
