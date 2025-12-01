@@ -12,7 +12,7 @@
         /* 自訂樣式 */
         body {
             font-family: 'Inter', 'Noto Sans TC', sans-serif;
-            background-color: #f8f9fa; /* 淺灰色背景 */
+            background-color: #fbfaf5; /* 淺灰色背景 -> 溫暖米色 */
         }
 
         /* 側邊欄樣式 */
@@ -20,11 +20,6 @@
             transition: transform 0.3s ease-in-out;
             /* 預設在小螢幕上隱藏 */
             transform: translateX(-100%);
-        }
-        
-        /* 新增：行動裝置上側邊欄開啟時的樣式 */
-        #sidebar.open {
-            transform: translateX(0);
         }
         
         /* 在 lg (1024px) 以上的螢幕，側邊欄預設開啟 */
@@ -71,6 +66,7 @@
             background-color: white;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             padding: 1rem; /* 新增：統一 padding */
+            background-color: #fffefb; /* 卡片背景色 white -> 淺米白 */
         }
 
         .card-back {
@@ -137,7 +133,7 @@
             transition: all 0.2s ease-in-out;
         }
         .sidebar-link:not(.active):hover {
-            background-color: #f1f5f9; /* 淺灰 */
+            background-color: #f0eade; /* 淺灰 -> 米色 hover */
         }
         
         /* --- 新增：練習模式樣式 --- */
@@ -196,6 +192,21 @@
         #streak-effect.animate {
             animation: streak-pop 1s ease-out forwards;
         }
+
+        /* 計時條動畫 */
+        @keyframes countdown {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+        .timer-bar {
+            height: 6px;
+            background-color: #3b82f6;
+            border-radius: 3px;
+            width: 100%;
+        }
+        .timer-bar.running {
+            animation: countdown 10s linear forwards;
+        }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden">
@@ -204,7 +215,7 @@
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden"></div>
 
     <!-- 側邊欄 -->
-    <aside id="sidebar" class="w-64 bg-white shadow-md flex-shrink-0 fixed inset-y-0 left-0 z-30 lg:relative flex flex-col">
+    <aside id="sidebar" class="w-64 bg-[#f7f4ec] shadow-md flex-shrink-0 fixed inset-y-0 left-0 z-30 lg:relative flex flex-col"> <!-- bg-white -> bg-beige-100 -->
         <div class="p-4 flex justify-between items-center border-b lg:border-b-0 flex-shrink-0">
             <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">單字列表</h2>
             <!-- 行動裝置上的關閉按鈕 -->
@@ -213,12 +224,47 @@
             </button>
         </div>
         <nav id="sidebar-nav" class="flex-1 flex flex-col p-2 overflow-y-auto divide-y divide-gray-200"></nav>
+
+        <!-- 修改：詞性對照表 (美化) -->
+        <div class="flex-shrink-0 p-4 border-t border-gray-200">
+            <h3 class="text-xs font-semibold text-gray-400 uppercase mb-3">詞性對照</h3>
+            <!-- 使用 grid 讓排版更整齊 + 新增背景和圓角 -->
+            <div class="bg-[#f0eade] p-3 rounded-lg grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs"> <!-- bg-gray-50 -> bg-beige-200 -->
+                <span class="font-bold text-gray-700">n.</span>
+                <span class="text-gray-500">名詞</span>
+                
+                <span class="font-bold text-gray-700">v.</span>
+                <span class="text-gray-500">動詞 (vi./vt.)</span>
+                
+                <span class="font-bold text-gray-700">adj.</span>
+                <span class="text-gray-500">形容詞</span>
+                
+                <span class="font-bold text-gray-700">adv.</span>
+                <span class="text-gray-500">副詞</span>
+                
+                <span class="font-bold text-gray-700">prep.</span>
+                <span class="text-gray-500">介系詞</span>
+                
+                <span class="font-bold text-gray-700">conj.</span>
+                <span class="text-gray-500">連接詞</span>
+                
+                <span class="font-bold text-gray-700">pron.</span>
+                <span class="text-gray-500">代名詞</span>
+                
+                <span class="font-bold text-gray-700">interj.</span>
+                <span class="text-gray-500">感嘆詞</span>
+                
+                <span class="font-bold text-gray-700">片</span>
+                <span class="text-gray-500">片語</span>
+            </div>
+        </div>
+        <!-- 結束修改 -->
     </aside>
 
     <!-- 主要內容區 -->
     <main id="main-content" class="flex-1 flex flex-col overflow-hidden">
         <!-- 頂部標題 -->
-        <header class="bg-white shadow-sm p-4 z-10 flex items-center">
+        <header class="bg-[#f7f4ec] shadow-sm p-4 z-10 flex items-center"> <!-- bg-white -> bg-beige-100 -->
             <!-- 漢堡按鈕 -->
             <button id="sidebar-toggle-btn" class="p-2 mr-2 text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -256,7 +302,7 @@
         </div>
 
         <!-- 底部提示 -->
-        <footer class="text-center p-4 text-gray-500 text-sm bg-white border-t" id="main-footer">
+        <footer class="text-center p-4 text-gray-500 text-sm bg-[#f7f4ec] border-t" id="main-footer"> <!-- bg-white -> bg-beige-100 -->
             點擊卡片或按空白鍵/Enter 進行翻轉
         </footer>
     </main>
@@ -267,7 +313,7 @@
         <div class="modal-backdrop fixed inset-0"></div>
         
         <!-- Modal 內容 (修正：新增 flex flex-col) -->
-        <div class="modal w-full max-w-lg bg-white rounded-lg shadow-2xl z-50 transform scale-95 opacity-0 flex flex-col">
+        <div class="modal w-full max-w-lg bg-[#f7f4ec] rounded-lg shadow-2xl z-50 transform scale-95 opacity-0 flex flex-col"> <!-- bg-white -> bg-beige-100 -->
             <!-- Modal 標題 -->
             <div class="flex justify-between items-center p-4 border-b">
                 <h3 class="text-lg font-semibold text-gray-800">練習設定</h3>
@@ -281,7 +327,7 @@
                 <!-- 選擇天數 -->
                 <div>
                     <h4 class="font-medium text-gray-700">選擇要練習的天數</h4>
-                    <div id="day-selection-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mt-3 max-h-48 overflow-y-auto p-2 bg-gray-50 rounded-md border">
+                    <div id="day-selection-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mt-3 max-h-48 overflow-y-auto p-2 bg-[#f0eade] rounded-md border"> <!-- bg-gray-50 -> bg-beige-200 -->
                         <!-- JS 動態填入 Checkbox -->
                     </div>
                     <div class="mt-2 text-xs text-gray-500">
@@ -308,10 +354,10 @@
             </div>
             
             <!-- Modal 底部 -->
-            <div class="flex justify-end items-center p-4 bg-gray-50 border-t rounded-b-lg">
+            <div class="flex justify-end items-center p-4 bg-[#f0eade] border-t rounded-b-lg"> <!-- bg-gray-50 -> bg-beige-200 -->
                 <span id="quiz-setup-error" class="text-sm text-red-500 mr-4 hidden">請至少選擇一個天數</span>
                 <button id="start-quiz-btn" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                    開始測驗
+                    開始測驗 (限時20題)
                 </button>
             </div>
         </div>
@@ -2663,11 +2709,13 @@
         // --- 新增：練習狀態變數 ---
         let quizState = {
             words: [],
-            quizType: 'en-to-zh', // 'en-to-zh' 或 'zh-to-en'
+            quizType: 'en-to-zh', 
             currentIndex: 0,
             streak: 0,
-            correctAnswers: 0,
-            totalQuestions: 0
+            totalScore: 0, // 新增：總分
+            results: [],   // 新增：紀錄每題結果
+            timerInterval: null, // 新增：計時器
+            startTime: 0 // 新增：開始時間
         };
 
 
@@ -2893,8 +2941,7 @@
                     currentDay = day;
                     renderVocabGrid(currentDay); // renderVocabGrid 會自動退出練習模式
                     
-                    // 修正：將 768px 改為 1024px，以匹配 CSS 的 lg 中斷點
-                    if (window.innerWidth < 1024) { 
+                    if (window.innerWidth < 768) {
                         sidebar.classList.remove('open');
                         overlay.classList.add('hidden');
                     }
@@ -3049,19 +3096,28 @@
                 return;
             }
             
-            // 5. 初始化狀態
+            // 5. 初始化狀態 (隨機取 20 題)
+            let shuffledWords = shuffleArray(words);
+            const questionLimit = 20;
+            // 如果單字總數少於 20，就用全部，否則只取前 20 個
+            const quizWords = shuffledWords.length > questionLimit ? shuffledWords.slice(0, questionLimit) : shuffledWords;
+
             quizState = {
-                words: shuffleArray(words),
+                words: quizWords,
                 quizType: selectedQuizTypes, // 修改：儲存一個包含所有模式的陣列
                 currentIndex: 0,
                 streak: 0,
+                totalScore: 0,
+                results: [],
                 correctAnswers: 0,
-                totalQuestions: words.length
+                totalQuestions: quizWords.length,
+                timerInterval: null,
+                startTime: 0
             };
             
             // 6. 關閉 Modal 並切換介面
             closeQuizModal();
-            mainTitle.textContent = "練習模式";
+            mainTitle.textContent = "限時挑戰模式";
             mainContentArea.innerHTML = ''; // 清空內容
             mainFooter.classList.add('hidden'); // 隱藏底部
             
@@ -3073,6 +3129,9 @@
          * 顯示下一題測驗
          */
         function displayNextQuestion() {
+            // 清除之前的計時器
+            if (quizState.timerInterval) clearInterval(quizState.timerInterval);
+
             // 檢查是否結束
             if (quizState.currentIndex >= quizState.totalQuestions) {
                 showQuizResults();
@@ -3102,7 +3161,7 @@
             
             // --- 修改：隨機選擇練習模式 ---
             // 決定問題和答案
-            let questionText, answerTexts, subText;
+            let questionText, answerTexts, subText, correctAnsText;
             
             // 1. 從使用者勾選的模式陣列中，隨機選一種
             const randomQuizType = quizState.quizType[Math.floor(Math.random() * quizState.quizType.length)];
@@ -3111,34 +3170,48 @@
             if (randomQuizType === 'en-to-zh') {
                 questionText = currentWord.word;
                 answerTexts = options.map(opt => opt.definition);
+                correctAnsText = currentWord.definition;
                 subText = '請選擇正確的中文';
             } else { // 'zh-to-en'
                 questionText = currentWord.definition;
                 answerTexts = options.map(opt => opt.word);
+                correctAnsText = currentWord.word;
                 subText = '請選擇正確的英文';
             }
             
+            // 記錄當前題目的正確答案文字，供結果頁使用
+            quizState.currentQuestionCorrectText = correctAnsText;
+            quizState.currentQuestionWord = currentWord.word;
+
             // 產生 HTML
             const quizHTML = `
                 <div id="quiz-container" class="max-w-2xl mx-auto p-4">
                     <!-- 狀態列 -->
-                    <div class="flex justify-between items-center mb-6">
+                    <div class="flex justify-between items-center mb-2">
                         <span class="text-sm font-medium text-gray-600">
-                            進度: ${quizState.currentIndex + 1} / ${quizState.totalQuestions}
+                            題數: ${quizState.currentIndex + 1} / ${quizState.totalQuestions}
                         </span>
-                        <span class="text-lg font-bold text-yellow-500">
-                            🔥 連對: ${quizState.streak}
-                        </span>
-                        <button id="exit-quiz-btn" class="text-sm text-gray-500 hover:text-red-600 hover:underline">
-                            退出練習
-                        </button>
+                        <div class="flex gap-4">
+                            <span class="text-sm font-bold text-blue-600">
+                                分數: ${quizState.totalScore}
+                            </span>
+                            <span class="text-sm font-bold text-yellow-500">
+                                🔥 連對: ${quizState.streak}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- 計時條 -->
+                    <div class="w-full bg-gray-200 rounded-full h-1.5 mb-6 overflow-hidden">
+                        <div id="timer-bar" class="timer-bar h-1.5 rounded-full bg-blue-600 running"></div>
                     </div>
                     
                     <!-- 題目 -->
-                    <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="bg-white p-8 rounded-lg shadow-md text-center relative overflow-hidden">
+                        <div id="time-bonus-indicator" class="absolute top-2 right-2 text-xs font-bold text-green-500 opacity-0 transition-opacity"></div>
                         <h2 class="text-3xl font-bold text-gray-800">${questionText}</h2>
                         <!-- 修改：顯示動態的提示文字 -->
-                        <span class="text-sm text-gray-400">${subText}</span>
+                        <span class="text-sm text-gray-400 block mt-2">${subText}</span>
                     </div>
                     
                     <!-- 選項 -->
@@ -3146,11 +3219,18 @@
                         ${options.map((opt, index) => `
                             <button 
                                 class="quiz-option-btn w-full p-4 bg-white border-2 border-gray-200 rounded-lg shadow-sm text-gray-700 font-medium text-center"
+                                data-text="${answerTexts[index]}"
                                 data-correct="${opt.word === currentWord.word}"
                             >
                                 ${answerTexts[index]}
                             </button>
                         `).join('')}
+                    </div>
+                    
+                    <div class="text-center mt-6">
+                        <button id="exit-quiz-btn" class="text-sm text-gray-500 hover:text-red-600 hover:underline">
+                            退出練習
+                        </button>
                     </div>
                 </div>
             `;
@@ -3162,24 +3242,104 @@
             document.querySelectorAll('.quiz-option-btn').forEach(btn => {
                 btn.addEventListener('click', handleQuizAnswer);
             });
+
+            // 啟動計時器
+            startTimer();
+        }
+
+        /**
+         * 啟動 10 秒計時
+         */
+        function startTimer() {
+            quizState.startTime = Date.now();
+            const timeLimit = 10000; // 10秒
+            
+            // 如果之前的計時器還在，先清除
+            if (quizState.timerInterval) clearInterval(quizState.timerInterval);
+
+            quizState.timerInterval = setTimeout(() => {
+                // 時間到，自動視為答錯
+                handleTimeout();
+            }, timeLimit);
+        }
+
+        /**
+         * 處理時間到
+         */
+        function handleTimeout() {
+            // 停用所有按鈕
+            document.querySelectorAll('.quiz-option-btn').forEach(btn => {
+                btn.disabled = true;
+            });
+
+            // 標示正確答案
+            const correctBtn = document.querySelector('.quiz-option-btn[data-correct="true"]');
+            if(correctBtn) correctBtn.classList.add('correct');
+
+            // 記錄結果 (未作答)
+            quizState.results.push({
+                question: quizState.currentQuestionWord,
+                isCorrect: false,
+                userAnswer: "逾時",
+                correctAnswer: quizState.currentQuestionCorrectText,
+                timeUsed: 10,
+                score: 0
+            });
+
+            quizState.streak = 0;
+            quizState.currentIndex++;
+
+            // 延遲後下一題
+            setTimeout(() => {
+                displayNextQuestion();
+            }, 1500);
         }
         
         /**
          * 處理測驗答案
          */
         function handleQuizAnswer(e) {
+            // 清除計時器，防止觸發 timeout
+            clearTimeout(quizState.timerInterval);
+
             const clickedButton = e.target;
             const isCorrect = clickedButton.dataset.correct === 'true';
+            const userAnswerText = clickedButton.dataset.text;
+            
+            // 計算耗時
+            const timeNow = Date.now();
+            const timeUsed = (timeNow - quizState.startTime) / 1000; // 秒
+            const timeLeft = Math.max(0, 10 - timeUsed); // 剩餘秒數
+
+            // 停止動畫
+            const timerBar = document.getElementById('timer-bar');
+            if(timerBar) timerBar.style.animationPlayState = 'paused';
             
             // 停止所有按鈕的點擊
             document.querySelectorAll('.quiz-option-btn').forEach(btn => {
                 btn.disabled = true;
             });
 
+            let earnedScore = 0;
+
             if (isCorrect) {
                 clickedButton.classList.add('correct');
                 quizState.streak++;
                 quizState.correctAnswers++;
+                
+                // --- 分數計算邏輯 ---
+                // 基礎分 100 + (剩餘秒數 * 10)
+                // 例如：剩餘 9.5秒 -> 100 + 95 = 195分
+                // 例如：剩餘 1.0秒 -> 100 + 10 = 110分
+                earnedScore = 100 + Math.floor(timeLeft * 10);
+                quizState.totalScore += earnedScore;
+
+                // 顯示加分提示
+                const bonusIndicator = document.getElementById('time-bonus-indicator');
+                if(bonusIndicator) {
+                    bonusIndicator.textContent = `+${earnedScore}`;
+                    bonusIndicator.classList.remove('opacity-0');
+                }
                 
                 // 檢查是否觸發特效
                 if (quizState.streak > 0 && quizState.streak % 5 === 0) {
@@ -3192,6 +3352,16 @@
                 document.querySelector('.quiz-option-btn[data-correct="true"]').classList.add('correct');
             }
             
+            // 記錄結果
+            quizState.results.push({
+                question: quizState.currentQuestionWord,
+                isCorrect: isCorrect,
+                userAnswer: userAnswerText,
+                correctAnswer: quizState.currentQuestionCorrectText,
+                timeUsed: timeUsed.toFixed(1),
+                score: earnedScore
+            });
+
             quizState.currentIndex++;
             
             // 延遲 1.5 秒後到下一題
@@ -3220,23 +3390,73 @@
         }
         
         /**
-         * 顯示測驗結果
+         * 顯示測驗結果 (含詳細總表)
          */
         function showQuizResults() {
-            const score = (quizState.correctAnswers / quizState.totalQuestions * 100).toFixed(0);
+            // const score = (quizState.correctAnswers / quizState.totalQuestions * 100).toFixed(0); // 改用總分顯示
+            
+            let tableRows = quizState.results.map((res, index) => {
+                const rowClass = res.isCorrect ? 'bg-green-50' : 'bg-red-50';
+                const statusIcon = res.isCorrect 
+                    ? '<span class="text-green-600 font-bold">✓</span>' 
+                    : '<span class="text-red-600 font-bold">✗</span>';
+                
+                return `
+                    <tr class="${rowClass} border-b border-gray-200">
+                        <td class="p-3 text-sm text-gray-700">${index + 1}</td>
+                        <td class="p-3 text-sm font-medium text-gray-800">${res.question}</td>
+                        <td class="p-3 text-sm text-gray-600">${res.correctAnswer}</td>
+                        <td class="p-3 text-sm text-gray-600">${res.isCorrect ? '-' : res.userAnswer}</td>
+                        <td class="p-3 text-center">${statusIcon}</td>
+                        <td class="p-3 text-right text-sm font-mono text-blue-600">${res.score}</td>
+                    </tr>
+                `;
+            }).join('');
+
             const resultHTML = `
-                <div class="max-w-2xl mx-auto p-4 text-center">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4">測驗完成！</h2>
-                    <div class="bg-white p-8 rounded-lg shadow-md">
-                        <p class="text-lg text-gray-600">你的成績：</p>
-                        <h3 class="text-6xl font-bold text-blue-600 my-4">${score} <span class="text-2xl">%</span></h3>
-                        <p class="text-gray-700">
-                            答對 ${quizState.correctAnswers} 題，共 ${quizState.totalQuestions} 題
-                        </p>
+                <div class="max-w-4xl mx-auto p-4">
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-6 text-center">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-2">測驗完成！</h2>
+                        <div class="flex justify-center items-center gap-8 mt-4">
+                            <div>
+                                <p class="text-sm text-gray-500">總得分</p>
+                                <p class="text-4xl font-bold text-blue-600">${quizState.totalScore}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">答對題數</p>
+                                <p class="text-4xl font-bold text-green-600">${quizState.correctAnswers}<span class="text-lg text-gray-400">/${quizState.totalQuestions}</span></p>
+                            </div>
+                        </div>
                     </div>
-                    <button id="exit-quiz-btn" class="mt-8 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700">
-                        返回瀏覽模式
-                    </button>
+
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4 bg-gray-50 border-b border-gray-200">
+                            <h3 class="font-bold text-gray-700">詳細成績單</h3>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-gray-100 text-gray-600 uppercase text-xs">
+                                        <th class="p-3">#</th>
+                                        <th class="p-3">單字</th>
+                                        <th class="p-3">正確答案</th>
+                                        <th class="p-3">您的回答</th>
+                                        <th class="p-3 text-center">結果</th>
+                                        <th class="p-3 text-right">得分</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${tableRows}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-8">
+                        <button id="exit-quiz-btn" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 shadow-sm transition-colors">
+                            返回瀏覽模式
+                        </button>
+                    </div>
                 </div>
             `;
             mainContentArea.innerHTML = resultHTML;
@@ -3247,6 +3467,9 @@
          * 退出練習模式
          */
         function exitQuizMode(render = true) {
+            // 清除計時器
+            if (quizState.timerInterval) clearTimeout(quizState.timerInterval);
+
             // 移除練習介面 (如果存在)
             document.getElementById('quiz-container')?.remove();
             
