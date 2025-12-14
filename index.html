@@ -21,6 +21,11 @@
             /* 預設在小螢幕上隱藏 */
             transform: translateX(-100%);
         }
+
+        /* 修正：加入手機版開啟側邊欄的樣式 */
+        #sidebar.open {
+            transform: translateX(0);
+        }
         
         /* 在 lg (1024px) 以上的螢幕，側邊欄預設開啟 */
         @media (min-width: 1024px) {
